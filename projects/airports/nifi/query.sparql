@@ -1,0 +1,28 @@
+PREFIX  dbo:  <http://dbpedia.org/ontology/>
+PREFIX  lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX  owl:  <http://www.w3.org/2002/07/owl#>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT  *
+
+WHERE {
+  { SELECT  ?s ?t
+# FROM <http://qrowd-project.eu/>
+    WHERE  { ?s  owl:sameAs  ?t
+    } LIMIT 1000
+  }
+
+
+
+  SERVICE <http://dbpedia.org/sparql> {
+    OPTIONAL {?s  <http://www.w3.org/2000/01/rdf-schema#label> ?sl
+      FILTER (langMATCHES(lang(?sl), "en"))
+    }
+}
+
+SERVICE <http://linkedgeodata.org/sparql> {
+OPTIONAL { ?t  <http://www.w3.org/2000/01/rdf-schema#label> ?tl
+  FILTER (langMATCHES(lang(?tl), "en"))
+}
+}
+}

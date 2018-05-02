@@ -1,0 +1,17 @@
+[{
+    "operation": "shift",
+    "spec": {
+      "@": "info[]"
+    }
+  },
+  {
+    "operation": "default",
+    "spec": {
+      "calibration": 0,
+      "priority_0": 0,
+      "n_answers": 30,
+      "quorum": 0,
+      "project_id": 20
+    }
+  }
+]
