@@ -167,29 +167,6 @@
 
     pybossa.taskLoaded(function(task, deferred) {
         if (!$.isEmptyObject(task)) {
-            var scope = angular.element('[ng-controller=MarkerController]').scope()
-            var bounds = scope.leafletBoundsHelpers.createBoundsFromArray([
-                [task.info.target_lat, target.long],
-                [task.info.source_lat, task.info.source_long]
-            ]);
-            scope.addMarkers = function() {
-                angular.extend(scope, {
-                    bounds: bounds,
-                    markers: {
-                        m1: {
-                            lat: task.info.source_lat,
-                            lng: task.info.source_long,
-                            message: "A "
-                        },
-                        m2: {
-                            lat: task.info.target_lat,
-                            lng: task.info.target_long,
-                            message: "B "
-                        }
-                    }
-                });
-            }();
-            scope.$apply()
             $("#source ").attr('src', task.info.source_thumbnail);
             $("#target ").attr('src', task.info.target_thumbnail);
             $("#sourcecapacity ").text(task.info.source_capacity + " Bikes");
@@ -235,5 +212,5 @@
         }
     });
 
-    pybossa.run('test');
+    pybossa.run('airports');
 </script>

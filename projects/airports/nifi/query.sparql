@@ -4,25 +4,36 @@ PREFIX  owl:  <http://www.w3.org/2002/07/owl#>
 PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 
 SELECT  *
-
 WHERE {
   { SELECT  ?s ?t
 # FROM <http://qrowd-project.eu/>
-    WHERE  { ?s  owl:sameAs  ?t
-    } LIMIT 1000
+    WHERE  { 
+      ?s  owl:sameAs  ?t
+    } LIMIT 3
   }
 
-
+  SERVICE <http://dbpedia.org/sparql> {
+    OPTIONAL {
+      ?s  <http://www.w3.org/2000/01/rdf-schema#label> ?source_capacity .
+      ?s  <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?source_lat .
+      ?s  <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?source_long .
+      FILTER (langMATCHES(lang(?source_capacity), "en"))
+    }
+  }
 
   SERVICE <http://dbpedia.org/sparql> {
-    OPTIONAL {?s  <http://www.w3.org/2000/01/rdf-schema#label> ?sl
-      FILTER (langMATCHES(lang(?sl), "en"))
+    OPTIONAL {
+      ?t  <http://www.w3.org/2000/01/rdf-schema#label> ?target_capacity .
+      ?t  <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?target_lat .
+      ?t  <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?target_long .
+      FILTER (langMATCHES(lang(?target_capacity), "en"))
     }
+  }
 }
 
-SERVICE <http://linkedgeodata.org/sparql> {
-OPTIONAL { ?t  <http://www.w3.org/2000/01/rdf-schema#label> ?tl
-  FILTER (langMATCHES(lang(?tl), "en"))
-}
-}
-}
+#  SERVICE <http://linkedgeodata.org/sparql> {
+#    OPTIONAL { 
+#      ?t  <http://www.w3.org/2000/01/rdf-schema#label> ?tl
+#      FILTER (langMATCHES(lang(?tl), "en"))
+#    }
+#  }

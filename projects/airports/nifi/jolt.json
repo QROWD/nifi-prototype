@@ -7,11 +7,11 @@
   {
     "operation": "default",
     "spec": {
-      "calibration": 0,
-      "priority_0": 0,
-      "n_answers": 30,
-      "quorum": 0,
-      "project_id": 20
+      "calibration": "${task.calibration}",
+      "priority_0": "${task.priority_0}",
+      "n_answers": "${task.n_answers}",
+      "quorum": "${task.quorum}",
+      "project_id": "${task.project_id}"
     }
   }
 ]

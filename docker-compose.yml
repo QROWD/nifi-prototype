@@ -4,6 +4,7 @@ services:
     image: apache/nifi
     environment:
       NIFI_WEB_HTTP_PORT: '9090'
+      NIFI_WEB_HTTP_HOST: '127.0.0.1'
     volumes:
       - './nifi-data/:/home/nifi/data'
     network_mode: "host"
