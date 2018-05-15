@@ -7,6 +7,10 @@
 - [Known Issues](#known-issues)
 - [Possible Processors](#possible-processors)
 
+## Knowledge
+
+- [Developing A Custom Apache Nifi Processor (JSON)](http://www.nifi.rocks/developing-a-custom-apache-nifi-processor-json/)
+
 ## Installation
 
 1. [Install Pybossa](https://docs.pybossa.com/installation/vagrant/).
