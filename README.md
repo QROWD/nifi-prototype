@@ -14,6 +14,8 @@
 ## Knowledge
 
 - [Developing A Custom Apache Nifi Processor (JSON)](http://www.nifi.rocks/developing-a-custom-apache-nifi-processor-json/)
+- [Chaffelson/nipyapi: A convenient Python wrapper for Apache NiFi](https://github.com/Chaffelson/nipyapi)
+- [nifi/nifi-toolkit/nifi-toolkit-cli at nifi-registry-toolkit · bbende/nifi](https://github.com/bbende/nifi/tree/nifi-registry-toolkit/nifi-toolkit/nifi-toolkit-cli)
 
 ## Pybossa Nifi Adapter
 
