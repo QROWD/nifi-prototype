@@ -1,6 +1,7 @@
 /nifi-sparql-integrate-bundle
 /nifi-ckan-bundle
 /pybossa
+/ckan
 target/
 .tags
 .idea/

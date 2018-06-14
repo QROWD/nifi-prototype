@@ -1,4 +1,11 @@
 version: '3'
+
+volumes:
+  ckan_config:
+  ckan_home:
+  ckan_storage:
+  pg_data:
+
 services:
 
   nifi:
@@ -26,4 +33,61 @@ services:
       DEFAULT_GRAPH: "http://qrowd-project.eu/"
     volumes:
       - ./projects/airports/rdf:/data/toLoad
+    network_mode: "host"
+
+  ckan:
+    container_name: ckan
+    build:
+      context: ./ckan/
+      args:
+          - CKAN_SITE_URL=${CKAN_SITE_URL}
+    environment:
+      # Defaults work with linked containers, change to use own Postgres, SolR, Redis or Datapusher
+      - CKAN_SQLALCHEMY_URL=postgresql://ckan:${POSTGRES_PASSWORD}@localhost/ckan
+      - CKAN_DATASTORE_WRITE_URL=postgresql://ckan:${POSTGRES_PASSWORD}@localhost/datastore
+      - CKAN_DATASTORE_READ_URL=postgresql://datastore_ro:${DATASTORE_READONLY_PASSWORD}@localhost/datastore
+      - CKAN_SOLR_URL=http://localhost:8983/solr/ckan
+      - CKAN_REDIS_URL=redis://localhost:6379/1
+      - CKAN_DATAPUSHER_URL=http://localhost:8800
+      - CKAN_SITE_URL=${CKAN_SITE_URL}
+      - CKAN_MAX_UPLOAD_SIZE_MB=${CKAN_MAX_UPLOAD_SIZE_MB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
+    volumes:
+      - ckan_config:/etc/ckan
+      - ckan_home:/usr/lib/ckan
+      - ckan_storage:/var/lib/ckan
+    network_mode: "host"
+
+  datapusher:
+    container_name: datapusher
+    image: clementmouchet/datapusher
+    network_mode: "host"
+
+  db:
+    container_name: db
+    build:
+      context: ./ckan/
+      dockerfile: contrib/docker/postgresql/Dockerfile
+      args:
+        - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
+        - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    environment:
+      - DS_RO_PASS=${DATASTORE_READONLY_PASSWORD}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    network_mode: "host"
+
+  solr:
+    container_name: solr
+    build:
+      context: ./ckan/
+      dockerfile: contrib/docker/solr/Dockerfile
+    network_mode: "host"
+
+
+  redis:
+    container_name: redis
+    image: redis:latest
     network_mode: "host"
