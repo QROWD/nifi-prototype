@@ -29,6 +29,13 @@
 6. `docker-compose up`
 7. Goto Nifi group and adjust variables
 
+### Backup registry
+
+1. Install nipyapi
+   ```bash
+   pip install nipyapi
+   ```
+
 ### URLs
 
 - [NiFi](http://localhost:9090/nifi/)

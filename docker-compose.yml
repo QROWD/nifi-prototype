@@ -7,7 +7,7 @@ services:
       NIFI_WEB_HTTP_PORT: '9090'
       NIFI_WEB_HTTP_HOST: '127.0.0.1'
     volumes:
-      - './test/nifi-test-nar/target/nifi-test-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-1.6.0/lib/test.nar'
+      - './nifi-sparql-integrate-bundle/nifi-sparql-integrate-nar/target/nifi-sparql-integrate-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-1.6.0/lib/test.nar'
         # Enable debug at 8000
       - './bootstrap.conf:/opt/nifi/nifi-1.6.0/conf/bootstrap.conf'
     network_mode: "host"
