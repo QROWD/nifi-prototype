@@ -1,4 +1,5 @@
 /nifi-sparql-integrate-bundle
+/nifi-ckan-bundle
 /pybossa
 target/
 .tags
