@@ -2,6 +2,8 @@
 /nifi-ckan-bundle
 /pybossa
 /ckan
+/nifi
+/projects/airports/nifi/Trento+Railway+Timetables/
 target/
 .tags
 .idea/
