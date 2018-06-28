@@ -4,6 +4,7 @@
 /ckan
 /nifi
 /projects/airports/nifi/Trento+Railway+Timetables/
+/nifi-file-from-template-processor
 target/
 .tags
 .idea/
