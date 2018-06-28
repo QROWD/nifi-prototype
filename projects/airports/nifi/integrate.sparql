@@ -1,0 +1,78 @@
+# Static triples; used for ad-hoc ontology
+
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+CONSTRUCT {
+  eg:MeteoStationsDataset
+    a dcat:Dataset ;
+    dct:identifier "Meteo-Stations" ;
+    dct:title "Meteo-Stations" ;
+    dct:description "Stuff" ;
+    dcat:keyword "Keyword", "Keyword" ;
+    dcat:distribution eg:resource-meteo-stations ;
+    .
+
+  eg:resource-resource-meteo-stations
+    a dcat:Distribution ;
+#   dct:identifier \"$DISTRIBUTION_NAME\" ;
+    dct:title "Meteo-Stations" ;
+    dct:description "RDF dataset with meteorological data for trento." ;
+# Hijacking the dcat namespace to refer to a set of graphs within this dataset
+    dcat:accessURL <dataset.nq> ;
+    .
+
+  eg:quote
+    rdfs:label "I don't know what this quote measures" ;
+    .
+  
+  eg:east
+    rdfs:label "I don't know what reference system this refers to" ;
+    .
+} WHERE {
+  #Empty graph pattern evaluates to a single solution which does not bind variables, hence the triples above are emitted
+}
+
+
+PREFIX geo: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+CONSTRUCT {
+  ?s
+    a eg:WeatherStation ;
+    rdfs:label ?l ;
+    eg:shortName ?sl ;
+    eg:code ?c ;
+    eg:quote ?q ;
+    geo:long ?long ;
+    geo:lat ?lat ;
+    eg:east ?east ;
+    eg:north ?north ;
+    eg:start ?start ;
+    eg:end ?end ;
+    .
+}
+WHERE {
+  <http://dati.meteotrentino.it/service.asmx/listaStazioni> url:text ?src .
+  BIND(STRDT(?src, xsd:xml) AS ?xml)
+
+  ?xml xml:unnest ("//anagrafica" ?o)
+
+  BIND("http://qrowd-project.eu/resource/" AS ?ns)
+
+  # Create subject URI
+  BIND(xml:path(?o, "codice") AS ?c)
+  BIND(URI(CONCAT(?ns, ?c)) AS ?s)
+
+  # Attributes
+  BIND(xml:path(?o, "nome") AS ?l)
+  BIND(xml:path(?o, "nomebreve") AS ?sl)
+  BIND(xsd:integer(xml:path(?o, "quota")) AS ?q)
+  BIND(xsd:decimal(xml:path(?o, "longitudine")) AS ?long)
+  BIND(xsd:decimal(xml:path(?o, "latitudine")) AS ?lat)
+  BIND(xsd:decimal(xml:path(?o, "est")) AS ?east)
+  BIND(xsd:decimal(xml:path(?o, "north")) AS ?north)
+
+  # TODO Add a date:parse(format, string) sparql extension
+  BIND((xml:path(?o, "inizio")) AS ?start)
+  BIND((xml:path(?o, "fine")) AS ?end)
+
+}
+
