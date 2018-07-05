@@ -1,75 +1,41 @@
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 INSERT DATA{
-  eg:trentoRailwayTimeTablesDataset
+  eg:{{ dataset|replace("-", " ")|title|replace(" ", "")}}
     a dcat:Dataset ;
-    dct:identifier "trento-railway-time-tables" ;
-    dct:title "Trento Railway Timetables" ;
-    dct:description "Timetables" ;
-    dcat:keyword "qrowd", "trento", "timetable", "railway", "rdf" ;
+    dct:identifier "{{ dataset }}" ;
+    dct:title "{{ dataset_title }}" ;
+    dct:description "{{ dataset_description }}" ;
+    dcat:keyword {{ dataset_keywords }} ;
     .
 }
-
-
 
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX dcat: <http://www.w3.org/ns/dcat#>
 INSERT {
-  eg:trentoRailwayTimeTablesDataset
-    dcat:distribution eg:resource-1046-timetable-railway-trento-male ;
+  eg:{{ dataset|replace("-", " ")|title|replace(" ", "")}}
+    dcat:distribution eg:resource-{{ distribution }} ;
     .  
 
-  eg:resource-1046-timetable-railway-trento-male
+  eg:resource-{{ distribution }}
     a dcat:Distribution ;
-#    dct:identifier "1046-timetable-railway-trento-male" ;
-    dct:title "1046-timetable-railway-trento-male" ;
-    dct:description "RDF dataset with timetables for 1046-timetable-railway-trento-male" ;
-# Hijacking the dcat namespace to refer to a set of graphs within this dataset
-    dcat:accessURL eg:graph-1046-timetable-railway-trento-male ;
+    dct:title "{{ title }}" ;
+    dct:description "{{ description }}" ;
+    # Hijacking the dcat namespace to refer to a set of graphs within this dataset
+    dcat:accessURL eg:graph-{{ distribution }} ;
     .
 
-  eg:workload-1046-timetable-railway-trento-male
+  eg:workload-{{ distribution }}
     eg:workload ?o ;
-    eg:resultGraph eg:graph-1046-timetable-railway-trento-male ;
+    eg:resultGraph eg:graph-{{ distribution }} ;
     .
 
 }
 WHERE {
-  <https://os.smartcommunitylab.it/core.mobility/timetable/10/555> url:text ?src .
+  <{{ remote_url }}> url:text ?src .
   BIND(STRDT(?src, xsd:json) AS ?o)
 }
 
-
-
-PREFIX dct: <http://purl.org/dc/terms/>
-PREFIX dcat: <http://www.w3.org/ns/dcat#>
-INSERT {
-  eg:trentoRailwayTimeTablesDataset
-    dcat:distribution eg:resource-1047-timetable-railway-male-trento ;
-    .  
-
-  eg:resource-1047-timetable-railway-male-trento
-    a dcat:Distribution ;
-#    dct:identifier "1047-timetable-railway-male-trento" ;
-    dct:title "1047-timetable-railway-male-trento" ;
-    dct:description "RDF dataset with timetables for 1047-timetable-railway-male-trento" ;
-# Hijacking the dcat namespace to refer to a set of graphs within this dataset
-    dcat:accessURL eg:graph-1047-timetable-railway-male-trento ;
-    .
-
-  eg:workload-1047-timetable-railway-male-trento
-    eg:workload ?o ;
-    eg:resultGraph eg:graph-1047-timetable-railway-male-trento ;
-    .
-
-}
-WHERE {
-  <https://os.smartcommunitylab.it/core.mobility/timetable/10/556> url:text ?src .
-  BIND(STRDT(?src, xsd:json) AS ?o)
-}
-
-
-# Hijacking the dcat namespace to refer to a set of graphs within this dataset
 # Create stops
 INSERT {
   GRAPH ?g { ?s a eg:Stop }
