@@ -4,7 +4,6 @@
 /ckan
 /nifi
 /nifiCkanProcessor
-/projects/airports/nifi/datasets/
 /projects/airports/nifi/Trento+Railway+Timetables/
 /nifi-file-from-template-processor
 target/
