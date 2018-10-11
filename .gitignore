@@ -1,12 +1,8 @@
-/nifi-sparql-integrate-bundle
-/nifi-ckan-bundle
 /FOX
 /pybossa
 /ckan
 /nifi
-/nifiCkanProcessor
-/projects/airports/nifi/Trento+Railway+Timetables/
-/nifi-file-from-template-processor
+/processors
 target/
 .tags
 .idea/
