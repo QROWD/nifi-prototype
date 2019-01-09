@@ -1,0 +1,18 @@
+[{
+    "operation": "remove",
+    "spec": {
+      "info": ""
+    }
+  },
+  {
+    "operation": "default",
+    "spec": {
+      "input": "${text}",
+      "type": "text",
+      "task": "ner",
+      "output": "jsonld",
+      "lang": "en",
+      "foxlight": "org.aksw.fox.tools.ner.en.IllinoisExtendedEN"
+    }
+  }
+]
