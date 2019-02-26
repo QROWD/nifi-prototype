@@ -1,0 +1,12 @@
+[{
+  "@id": "http://test-ressource/0",
+  "@type": ["http://www.example.org/entry"],
+  "http://www.example.org/0": [{
+    "@value": "0"
+  }],
+  "http://www.example.org/1": [{
+    "@value": "1"
+  }]
+}, {
+  "@id": "http://www.example.org/entry"
+}]
