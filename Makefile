@@ -8,6 +8,6 @@ start:
 	docker-compose up -d
 build-processor:
 	cd processors/nifi-sparql-integrate-bundle && mvn clean install
-	# cd nifi-ckan-bundle && mvn clean install
-	# cd nifiCkanProcessor && mvn clean install
-	# cd nifi-file-from-template-processor && mvn clean install
+	cd processors/nifi-ckan-bundle && mvn clean install 
+	cd processors/nifiCkanProcessor && mvn clean install 
+	cd processors/nifi-file-from-template-processor && mvn clean install
