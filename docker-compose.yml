@@ -1,4 +1,5 @@
-version: '3'
+---
+version: "3"
 
 volumes:
   ckan_config:
@@ -7,27 +8,29 @@ volumes:
   pg_data:
 
 services:
-
   nifi:
-    image: apache/nifi:1.7.0
+    image: apache/nifi:1.9.2
     environment:
-      NIFI_WEB_HTTP_PORT: '9090'
-      NIFI_WEB_HTTP_HOST: '127.0.0.1'
+      NIFI_WEB_HTTP_PORT: "9090"
+      NIFI_WEB_HTTP_HOST: "127.0.0.1"
     volumes:
-      - './processors/nifi-sparql-integrate-bundle/nifi-sparql-integrate-nar/target/nifi-sparql-integrate-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-1.7.0/lib/test.nar'
-      - './processors/nifi-ckan-bundle/nifi-ckan-nar/target/nifi-ckan-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-1.7.0/lib/test2.nar'
-      - './processors/nifi-file-from-template-processor/nifi-filefromtemplate-nar/target/nifi-filefromtemplate-nar-0.2.1.nar:/opt/nifi/nifi-1.7.0/lib/test3.nar'
-      - './processors/nifiCkanProcessor/nifi-nifiCKANprocessor-nar/target/nifi-nifiCKANprocessor-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-1.7.0/lib/test4.nar'
-      - './projects:/home/nifi/data'
-        # Enable debug at 8000
-      - './bootstrap.conf:/opt/nifi/nifi-1.7.0/conf/bootstrap.conf'
+      - "./processors/nifi-sparql-integrate-bundle/nifi-sparql-integrate-nar/target/nifi-sparql-integrate-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-current/lib/test.nar"
+      - "./processors/nifi-ckan-bundle/nifi-ckan-nar/target/nifi-ckan-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-current/lib/test2.nar"
+      - "./processors/nifi-file-from-template-processor/nifi-filefromtemplate-nar/target/nifi-filefromtemplate-nar-0.2.1.nar:/opt/nifi/nifi-current/lib/test3.nar"
+      - "./processors/nifiCkanProcessor/nifi-nifiCKANprocessor-nar/target/nifi-nifiCKANprocessor-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-current/lib/test4.nar"
+      - "./projects:/home/nifi/data"
+      # Enable debug at 8000
+      - "./bootstrap.conf:/opt/nifi/nifi-current/conf/bootstrap.conf"
     network_mode: host
 
   nifi-registry:
-    image: apache/nifi-registry
+    image: apache/nifi-registry:0.5.0
     environment:
-      NIFI_REGISTRY_WEB_HTTP_PORT: '19090'
-      NIFI_REGISTRY_WEB_HTTP_HOST: '127.0.0.1'
+      NIFI_REGISTRY_WEB_HTTP_PORT: "19090"
+      NIFI_REGISTRY_WEB_HTTP_HOST: "127.0.0.1"
+    volumes:
+      - "./registry-providers.xml:/opt/nifi-registry/nifi-registry-current/conf/providers.xml:ro"
+      - "./flow-storage:/flow_storage"
     network_mode: host
 
   virtuoso:
@@ -44,9 +47,10 @@ services:
     build:
       context: ./ckan/
       args:
-          - CKAN_SITE_URL=${CKAN_SITE_URL}
+        - CKAN_SITE_URL=${CKAN_SITE_URL}
     environment:
-      # Defaults work with linked containers, change to use own Postgres, SolR, Redis or Datapusher
+      # Defaults work with linked containers, change to use own
+      # Postgres, SolR, Redis or Datapusher
       - CKAN_SQLALCHEMY_URL=postgresql://ckan:${POSTGRES_PASSWORD}@localhost/ckan
       - CKAN_DATASTORE_WRITE_URL=postgresql://ckan:${POSTGRES_PASSWORD}@localhost/datastore
       - CKAN_DATASTORE_READ_URL=postgresql://datastore_ro:${DATASTORE_READONLY_PASSWORD}@localhost/datastore
@@ -90,7 +94,6 @@ services:
       dockerfile: contrib/docker/solr/Dockerfile
     network_mode: host
 
-
   redis:
     container_name: redis
     image: redis:latest
@@ -99,7 +102,7 @@ services:
   spacyapi:
     image: jgontrum/spacyapi:en_v2
     ports:
-      - '127.0.0.1:5551:80'
+      - "127.0.0.1:5551:80"
     restart: always
 
   limes:

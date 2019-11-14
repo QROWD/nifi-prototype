@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<providers>
+    <flowPersistenceProvider>
+        <class>org.apache.nifi.registry.provider.flow.git.GitFlowPersistenceProvider</class>
+        <property name="Flow Storage Directory">/flow_storage</property>
+    </flowPersistenceProvider>
+    <extensionBundlePersistenceProvider>
+        <class>org.apache.nifi.registry.provider.extension.FileSystemBundlePersistenceProvider</class>
+        <property name="Extension Bundle Storage Directory">./extension_bundles</property>
+    </extensionBundlePersistenceProvider>
+</providers>
