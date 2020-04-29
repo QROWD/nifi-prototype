@@ -14,7 +14,7 @@ services:
       NIFI_WEB_HTTP_PORT: "9090"
       NIFI_WEB_HTTP_HOST: "127.0.0.1"
     volumes:
-      - "./processors/nifi-sparql-integrate-bundle/nifi-sparql-integrate-nar/target/nifi-sparql-integrate-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-current/lib/test.nar"
+      - "./processors/nifi-sparql-integrate-bundle/nifi-sparql-integrate-nar/target/nifi-sparql-integrate-nar-1.0.nar:/opt/nifi/nifi-current/lib/test.nar"
       - "./processors/nifi-ckan-bundle/nifi-ckan-nar/target/nifi-ckan-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-current/lib/test2.nar"
       - "./processors/nifi-file-from-template-processor/nifi-filefromtemplate-nar/target/nifi-filefromtemplate-nar-0.2.1.nar:/opt/nifi/nifi-current/lib/test3.nar"
       - "./processors/nifiCkanProcessor/nifi-nifiCKANprocessor-nar/target/nifi-nifiCKANprocessor-nar-1.0-SNAPSHOT.nar:/opt/nifi/nifi-current/lib/test4.nar"
@@ -103,9 +103,9 @@ services:
     image: jgontrum/spacyapi:en_v2
     ports:
       - "127.0.0.1:5551:80"
-    restart: always
 
   limes:
     container_name: limes
-    image: limes
+    build:
+      context: ./LIMES/
     network_mode: host
